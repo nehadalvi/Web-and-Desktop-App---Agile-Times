@@ -23,10 +23,10 @@ const appRoutes: Routes = [
   { path: "", redirectTo: "/dashboard", pathMatch: "full" },
   { path: "dashboard", component: DashboardComponent },
   { path: "alltimes", component: AlltimesComponent },
-  { path: "timesheet", component: TimesheetComponent},
-  { path: "projects", component: ProjectsComponent},
-  { path: "profile", component: ProfileComponent},
-  { path: "settings", component: SettingsComponent},
+  { path: "timesheet", component: TimesheetComponent },
+  { path: "projects", component: ProjectsComponent },
+  { path: "profile", component: ProfileComponent },
+  { path: "settings", component: SettingsComponent },
 ];
 
 @NgModule({
@@ -46,7 +46,7 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(appRoutes, { useHash: true }),
     BrowserAnimationsModule,
     MenuModule,
     PanelModule,
@@ -80,7 +80,7 @@ const appRoutes: Routes = [
     DragDropModule,
     GalleriaModule
   ],
-  providers: [ ConfirmationService ],
+  providers: [ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
