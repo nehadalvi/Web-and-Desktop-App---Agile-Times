@@ -120,4 +120,8 @@ export class AlltimesComponent implements OnInit {
   onSubmit(){
     
   }
+
+  onRowSelect(rowSelected){
+
+  }
 }
