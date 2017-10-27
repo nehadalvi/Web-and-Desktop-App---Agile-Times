@@ -43,3 +43,8 @@ p-dataTable >>> .selectBoxColumn {
 p-contextMenu >>> .ui-menuitem-active a {
   background-color: #F15B2A !important;
 }
+
+p-dialog >>> .ui-grid-col-10 {
+  width: 300px;
+  margin: 0.5em;
+}

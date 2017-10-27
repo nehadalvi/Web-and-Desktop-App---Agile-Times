@@ -43,6 +43,24 @@
     </p-footer>
   </p-dataTable>
 
+  <button pButton label="Add Time Entry" (click)="displayEditDialog = true"></button>
+  <p-dialog header="Add Timesheet" [modal]="true" [(visible)]="displayEditDialog" width=500 height=770>
+    <form [formGroup]="allTimesForm" (ngSubmit)="onSubmit()" class="ui-g">
+        <input type="text" formControlName="user" pInputText class="ui-grid-col-10" placeholder="User" />
+      
+    
+    <input type="text" formControlName="project" pInputText class="ui-grid-col-10" placeholder="Project" />
+    <input type="text" formControlName="category" pInputText class="ui-grid-col-10" placeholder="Category" />
+    <input type="number" formControlName="start" pInputText class="ui-grid-col-10" placeholder="Start Time" />
+    <input type="number" formControlName="end" pInputText class="ui-grid-col-10" placeholder="End Time" />
+    <p-footer>
+     
+      <button pButton label="Cancel" icon="fa-times" (click)="cancelDialog()" class="ui-button-secondary"></button>
+      <button pButton label="Add" icon="fa-check" (click)="addNewEntry()"></button>
+    </p-footer>
+  </form>
+
+  </p-dialog>
   <p-contextMenu #tableContextMenu [model]="contextMenu"></p-contextMenu>
 
 </div>

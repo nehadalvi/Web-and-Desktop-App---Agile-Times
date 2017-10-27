@@ -4,6 +4,7 @@ import Dexie from 'dexie';
 import { Observable } from "rxjs";
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 const MAX_EXAMPLE_RECORDS = 1000;
 
@@ -30,10 +31,24 @@ export class AlltimesComponent implements OnInit {
 
   recordCount : number;
 
-  constructor(private apollo: Apollo) { }
+  allTimesForm: FormGroup;
 
+  constructor(private apollo: Apollo, private fb: FormBuilder) { }
+
+  displayEditDialog = false;
+
+  
 
   ngOnInit() {
+
+    this.allTimesForm = this.fb.group({
+      user:[''],
+      project:[''],
+      category:[''],
+      start: [''],
+      end:['']
+
+    })
     const AllClientsQuery = gql`
         query allTimesheets {
           allTimesheets {
@@ -48,7 +63,8 @@ export class AlltimesComponent implements OnInit {
 
   const queryObservable = this.apollo.watchQuery({
 
-    query: AllClientsQuery
+    query: AllClientsQuery,
+    pollInterval: 200 
   }).subscribe(({ data, loading }: any) => {
     
          this.allTimesheetData = data.allTimesheets;
@@ -62,5 +78,51 @@ export class AlltimesComponent implements OnInit {
 
   onEditComplete(editInfo) { }
 
+  addNewEntry(){
+    
+    const user = this.allTimesForm.value.user;
+    const project = this.allTimesForm.value.project;
+    const category = this.allTimesForm.value.category;
+    const startTime = this.allTimesForm.value.start;
+    const endTime = this.allTimesForm.value.end;
 
+    const createTimesheet = gql`
+              mutation createTimesheet ($user: String!, $project: String!, $category: String!, $startTime: Int!, $endTime: Int!, $date: DateTime!) {
+                createTimesheet(user: $user, project: $project, category: $category, startTime: $startTime, endTime: $endTime, date: $date ) {
+                  id
+                }
+              }
+            `;
+        
+            this.apollo.mutate({
+              mutation: createTimesheet,
+              variables: {
+                user: user,
+                project: project,
+                category: category,
+                startTime: startTime,
+                endTime: endTime,
+                date: new Date()
+              }
+            }).subscribe(({ data }) => {
+              console.log('got data', data);
+              
+          }, (error) => {
+              console.log('there was an error sending the query', error);
+            });
+            this.displayEditDialog = false;
+  }
+  
+
+  cancelDialog(){
+    this.displayEditDialog = false;
+  }
+
+  onSubmit(){
+    
+  }
+
+  onRowSelect(rowSelected){
+
+  }
 }
