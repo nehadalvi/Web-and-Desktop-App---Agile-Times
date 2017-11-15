@@ -1,3 +1,4 @@
+import { NestcamComponent } from './nestcam/nestcam.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -38,7 +39,8 @@ const appRoutes: Routes = [
   { path: 'timesheet', component: TimesheetComponent },
   { path: 'projects', component: ProjectsComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: 'settings', component: SettingsComponent }
+  { path: 'settings', component: SettingsComponent },
+  { path: 'nestcam', component: NestcamComponent }
 ];
 
 @NgModule({
@@ -49,6 +51,7 @@ const appRoutes: Routes = [
     TimesheetComponent,
     ProjectsComponent,
     AlltimesComponent,
+    NestcamComponent,
     ProfileComponent,
     SettingsComponent,
     FielderrorsComponent
