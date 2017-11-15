@@ -1,3 +1,4 @@
+import { DeviceService } from '../providers/device-service/device-service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from "rxjs";
 import { Apollo } from 'apollo-angular';
@@ -12,7 +13,16 @@ export class NestcamComponent implements OnInit {
   isStreaming: boolean;
   cameraName: string;
 
-  constructor(private apollo: Apollo) { }
+  constructor(private apollo: Apollo, private _deviceService: DeviceService) {
+
+    // Subscribe to devices$ Observable.
+    this._deviceService.devices$.subscribe(devices => {
+
+      const nestcams = devices;
+
+    });
+
+  }
 
   ngOnInit() {
 
@@ -28,7 +38,7 @@ export class NestcamComponent implements OnInit {
     const queryObservable = this.apollo.watchQuery({
 
       query: AllNestCams,
-      pollInterval: 200 
+      pollInterval: 500
 
     }).subscribe(({ data, loading }: any) => {
 
